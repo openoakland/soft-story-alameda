@@ -23,29 +23,25 @@
 
     var map = L.map('map').setView([37.765206, -122.241636], 14);
 
-    var buildingdata;
-    var latlonglookup;
-
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: 'Map data &copy <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    var popup = L.popup();
+    $.getJSON("./latlonglookup.json", function(latlonglookup) {
 
-    $.getJSON("./latlonglookup.json", function(got_latlonglookup) {
-      latlonglookup = got_latlonglookup;
+      $.getJSON("http://www.civicdata.com/api/action/datastore_search?resource_id=46ec0807-31ff-497f-bfa0-f31c796cdee8", function(buildingdata_page1) {
 
-      $.getJSON("./alameda.json", function(got_buildingdata) {
-        buildingdata = got_buildingdata;
+        $.getJSON("http://www.civicdata.com/api/action/datastore_search?offset=100&resource_id=46ec0807-31ff-497f-bfa0-f31c796cdee8", function(buildingdata_page2) {
 
-        _.each(got_buildingdata['result']['records'], function(item){
-          key = item['PermitNumber'];
-          latlong = latlonglookup[key];
-          console.log(item);
-          L.marker(latlong).addTo(map).bindPopup(item['StreetAddress'] + '<br><br>' + item['Description']);
-        });
+            all_buildings = [].concat(buildingdata_page1['result']['records']).concat(buildingdata_page2['result']['records']);
 
-        console.log('yolo');
+            _.each(all_buildings, function(item){
+            key = item['PermitNumber'];
+            latlong = latlonglookup[key];
+            L.marker(latlong).addTo(map).bindPopup(item['StreetAddress'] + '<br><br>' + item['Description']);
+            });
+
+          });
       });
     });
 
