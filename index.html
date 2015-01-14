@@ -30,9 +30,6 @@
       attribution: 'Map data &copy <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    L.marker([37.765206, -122.241636]).addTo(map)
-      .bindPopup("<b>Hello world!</b><br />I am a popup.");
-
     var popup = L.popup();
 
     $.getJSON("./latlonglookup.json", function(got_latlonglookup) {
