@@ -25,7 +25,7 @@
 
 
     //icon variables set to pngs
-    var sizeForAllIcons = [18,25];
+    var sizeForAllIcons = [25, 30];
 
     var notSoftStoryIcon = L.icon({
     iconUrl: 'img/notSoftStory.png',
@@ -80,7 +80,7 @@
 
             all_buildings = [].concat(buildingdata_page1['result']['records']).concat(buildingdata_page2['result']['records']);
 
-            console.log(all_buildings);
+            // console.log(all_buildings.length);
 
 
             _.each(all_buildings, function(item){
@@ -89,13 +89,11 @@
             console.log(item['Description']);
 
             //fetch icon depending on description
-
-              // var BuildingIcon;
-
               if(item['Description']=="SOFT STORY BUILDING"){
                 BuildingIcon = softStoryIcon;
               }
-              if(item['Description']== "SOFT STORY REHABILITATION PER ALAMEDA SOFT STORY ORDINANCE #2989") {
+         
+              if(item['Description'].match(/REHABILITATION/) || item['Description'].match(/RETROFIT/)) {
                 BuildingIcon = rehabIcon;
               }
               if(item['Description'].match(/NOT/) && item['Description'].match(/STORY/)) {
@@ -104,6 +102,7 @@
 
             L.marker(latlong, {icon: BuildingIcon}).addTo(map).bindPopup(item['StreetAddress'] + '<br><br>' + item['Description']);
             });
+
 
           });
       });
