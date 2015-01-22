@@ -25,7 +25,7 @@
 
 
     //icon variables set to pngs
-    var sizeForAllIcons = [16,21];
+    var sizeForAllIcons = [18,25];
 
     var notSoftStoryIcon = L.icon({
     iconUrl: 'img/notSoftStory.png',
@@ -86,11 +86,11 @@
             _.each(all_buildings, function(item){
             key = item['PermitNumber'];
             latlong = latlonglookup[key];
-            // console.log(item['Description']);
+            console.log(item['Description']);
 
             //fetch icon depending on description
 
-              var BuildinIcon;
+              // var BuildingIcon;
 
               if(item['Description']=="SOFT STORY BUILDING"){
                 BuildingIcon = softStoryIcon;
@@ -98,7 +98,7 @@
               if(item['Description']== "SOFT STORY REHABILITATION PER ALAMEDA SOFT STORY ORDINANCE #2989") {
                 BuildingIcon = rehabIcon;
               }
-              if(item['Description']== "NOT SOFT STORY PER ORDIANCE #2989" || item['Description']== "NOT SOFT STORY PER ORDINANCE #2989" ) {
+              if(item['Description'].match(/NOT/) && item['Description'].match(/STORY/)) {
                 BuildingIcon = notSoftStoryIcon;
               }
 
@@ -116,8 +116,7 @@
     var div = L.DomUtil.create('div', 'info legend');
 
         div.innerHTML +=
-        '<h4> Data collected by XXX, between YYY and ZZZ <br/> "Soft Story" defined as AAA by Agency BBB</h4>'  + '<p>' + 'Potential Soft Story Building <br/> Not Soft Story Building <br/> Soft Story Building <br/> Retrofitted'; 
-
+        '<h4> Data collected by XXX, between YYY and ZZZ <br/> "Soft Story" defined as AAA by Agency BBB</h4>'  + '<p>' + '<img src="img/softStory.png" width="20px">' + '   Soft Story Building <br/>'  + '<img src="img/rehab.png" width="20px">' + '  Potential Soft Story Building <br/>' +  '<img src="img/rehab.png" width="20px">' + ' Retrofitted </br>' +  '<img src="img/notSoftStory.png" width="20px">' + '   Not Soft Story Building'; 
 
         return div;
       };
