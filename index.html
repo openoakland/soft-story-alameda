@@ -17,12 +17,53 @@
 
 </head>
 <body>
-  <div id="map">   </div>
+  <div id="map"></div>
 
   <script>
 
     var map = L.map('map').setView([37.766202813376644, -122.26006507873535], 14);
 
+
+    //icon variables set to pngs
+    var sizeForAllIcons = [25, 30];
+
+    var notSoftStoryIcon = L.icon({
+    iconUrl: 'img/notSoftStory.png',
+    iconRetinaUrl: 'img/notSoftStory@2x.png',
+    iconSize: sizeForAllIcons,
+    // iconAnchor: [22, 94],
+    // popupAnchor: [-3, -76],
+    // shadowUrl: 'my-icon-shadow.png',
+    // shadowRetinaUrl: 'my-icon-shadow@2x.png',
+    // shadowSize: [68, 95],
+    // shadowAnchor: [22, 94]
+    });
+
+    var softStoryIcon = L.icon({
+    iconUrl: 'img/SoftStory.png',
+    iconRetinaUrl: 'img/SoftStory@2x.png',
+    iconSize: sizeForAllIcons,
+    // iconAnchor: [22, 94],
+    // popupAnchor: [-3, -76],
+    // shadowUrl: 'my-icon-shadow.png',
+    // shadowRetinaUrl: 'my-icon-shadow@2x.png',
+    // shadowSize: [68, 95],
+    // shadowAnchor: [22, 94]
+    });
+
+    var rehabIcon = L.icon({
+    iconUrl: 'img/rehab.png',
+    iconRetinaUrl: 'img/rehab.png',
+    iconSize: sizeForAllIcons,
+    // iconAnchor: [22, 94],
+    // popupAnchor: [-3, -76],
+    // shadowUrl: 'my-icon-shadow.png',
+    // shadowRetinaUrl: 'my-icon-shadow@2x.png',
+    // shadowSize: [68, 95],
+    // shadowAnchor: [22, 94]
+    });
+
+    // var BuildingIcon;
 
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: 'Map data &copy <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
@@ -32,15 +73,36 @@
 
       $.getJSON("http://www.civicdata.com/api/action/datastore_search?resource_id=46ec0807-31ff-497f-bfa0-f31c796cdee8", function(buildingdata_page1) {
 
+
+
         $.getJSON("http://www.civicdata.com/api/action/datastore_search?offset=100&resource_id=46ec0807-31ff-497f-bfa0-f31c796cdee8", function(buildingdata_page2) {
 
+
             all_buildings = [].concat(buildingdata_page1['result']['records']).concat(buildingdata_page2['result']['records']);
+
+            // console.log(all_buildings.length);
+
 
             _.each(all_buildings, function(item){
             key = item['PermitNumber'];
             latlong = latlonglookup[key];
-            L.marker(latlong).addTo(map).bindPopup(item['StreetAddress'] + '<br><br>' + item['Description']);
+            console.log(item['Description']);
+
+            //fetch icon depending on description
+              if(item['Description']=="SOFT STORY BUILDING"){
+                BuildingIcon = softStoryIcon;
+              }
+         
+              if(item['Description'].match(/REHABILITATION/) || item['Description'].match(/RETROFIT/)) {
+                BuildingIcon = rehabIcon;
+              }
+              if(item['Description'].match(/NOT/) && item['Description'].match(/STORY/)) {
+                BuildingIcon = notSoftStoryIcon;
+              }
+
+            L.marker(latlong, {icon: BuildingIcon}).addTo(map).bindPopup(item['StreetAddress'] + '<br><br>' + item['Description']);
             });
+
 
           });
       });
@@ -53,8 +115,7 @@
     var div = L.DomUtil.create('div', 'info legend');
 
         div.innerHTML +=
-        '<h4> Data collected by XXX, between YYY and ZZZ <br/> "Soft Story" defined as AAA by Agency BBB</h4>'  + '<p>' + 'Potential Soft Story Building <br/> Not Soft Story Building <br/> Soft Story Building <br/> Retrofitted'; 
-
+        '<h4> Data collected by XXX, between YYY and ZZZ <br/> "Soft Story" defined as AAA by Agency BBB</h4>'  + '<p>' + '<img src="img/softStory.png" width="20px">' + '   Soft Story Building <br/>'  + '<img src="img/rehab.png" width="20px">' + '  Potential Soft Story Building <br/>' +  '<img src="img/rehab.png" width="20px">' + ' Retrofitted </br>' +  '<img src="img/notSoftStory.png" width="20px">' + '   Not Soft Story Building'; 
 
         return div;
       };
