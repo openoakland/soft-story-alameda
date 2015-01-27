@@ -23,15 +23,13 @@ module.exports = function(grunt) {
       all: {
         dest: 'scripts/_bower.js',
         cssDest: 'styles/_bower.css',
-        //EXCLUDE LEAFLET FOR NOW
-        //TO DO (LEAFLET): FIX ICON MARKER & LAYER ISSUE ONCE ICONS ARE DECIDED (see bower.json --> 'main' files for more info
-        exclude: [
-          //'jquery',
+        /*exclude: [
+          'jquery',
           'leaflet'
-        ],
+        ],*/
         dependencies: {
-          'underscore': 'jQuery'
-          //'leaflet': ['jQuery', 'underscore']
+          'underscore': 'jQuery',
+          'leaflet': ['jQuery', 'underscore']
         },
         bowerOptions: {
           relative: false
