@@ -8,13 +8,14 @@
 
   <!-- STYLES -->
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
   <link rel="stylesheet" type="text/css" href="css/styles.css">
 
   <!-- SCRIPTS -->
   <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-
+  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
   <script src="js/helpers.js"></script>
 </head>
 <body>
@@ -22,7 +23,8 @@
 
   <script>
 
-    var map = L.map('map').setView([37.766202813376644, -122.26006507873535], 14);
+    L.mapbox.accessToken = 'pk.eyJ1Ijoic29mdC1zdG9yeS1hbGFtZWRhIiwiYSI6ImJna0NGZ0EifQ.XynDhfYk1dE2-aBdC9e2vQ';
+    var map = L.mapbox.map('map', 'soft-story-alameda.l3af0l6i').setView([37.766202813376644, -122.26006507873535], 14);
 
     //icon variables set to pngs
     var sizeForAllIcons = [25, 30];
@@ -64,10 +66,6 @@
     });
 
     // var BuildingIcon;
-
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data &copy <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-    }).addTo(map);
 
     $.getJSON("./latlonglookup.json", function(latlonglookup) {
 
@@ -117,8 +115,7 @@
     legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend');
 
-        div.innerHTML +=
-        '<h4> Data collected by XXX, between YYY and ZZZ <br/> "Soft Story" defined as AAA by Agency BBB</h4>'  + '<p>' + '<img src="img/softStory.png" width="20px">' + '   Soft Story Building <br/>'  + '<img src="img/rehab.png" width="20px">' + '  Potential Soft Story Building <br/>' +  '<img src="img/notSoftStory.png" width="20px">' + ' Retrofitted </br>' +  '<img src="img/notSoftStory.png" width="20px">' + '   Not Soft Story Building';
+        div.innerHTML += '<h4> Data collected by XXX, between YYY and ZZZ <br/> "Soft Story" defined as AAA by Agency BBB</h4>'  + '<p>' + '<img src="img/softStory.png" width="20px">' + '   Soft Story Building <br/>'  + '<img src="img/rehab.png" width="20px">' + '  Potential Soft Story Building <br/>' +  '<img src="img/notSoftStory.png" width="20px">' + ' Retrofitted </br>' +  '<img src="img/notSoftStory.png" width="20px">' + '   Not Soft Story Building';
 
         return div;
       };
