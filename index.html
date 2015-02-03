@@ -1,128 +1,133 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Soft Story Buildings in Alameda, CA</title>
-  <meta charset="utf-8" />
+	<head>
+		<title>Soft Story Buildings in Alameda, CA</title>
+		<meta charset="utf-8" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
-	<!-- STYLES -->
-	<link rel="stylesheet" href="styles/_bower.css">
-	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
-	<link rel="stylesheet" type="text/css" href="css/styles.css">
+		<!-- STYLES -->
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+		<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
 
-	<!-- SCRIPTS -->
-	<script src="scripts/_bower.min.js"></script>
-	<script src="js/helpers.js"></script>
-	<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
+		<!-- SCRIPTS -->
+		<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+		<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
 
-</head>
-<body>
-  <div id="map"></div>
+		<script src="js/helpers.js"></script>
 
-  <script>
+	</head>
+	<body>
+		<div id="map"></div>
 
-		L.mapbox.accessToken = 'pk.eyJ1Ijoic29mdC1zdG9yeS1hbGFtZWRhIiwiYSI6ImJna0NGZ0EifQ.XynDhfYk1dE2-aBdC9e2vQ';
-		var map = L.mapbox.map('map', 'soft-story-alameda.l3af0l6i')
-		.setView([37.766202813376644, -122.26006507873535], 14);
+		<script>
 
-    //icon variables set to pngs
-    var sizeForAllIcons = [25, 30];
+			L.mapbox.accessToken = 'pk.eyJ1Ijoic29mdC1zdG9yeS1hbGFtZWRhIiwiYSI6ImJna0NGZ0EifQ.XynDhfYk1dE2-aBdC9e2vQ';
+			var map = L.mapbox.map('map', 'soft-story-alameda.l3af0l6i')
+			.setView([37.766202813376644, -122.26006507873535], 14);
 
-    var notSoftStoryIcon = L.icon({
-    iconUrl: 'img/notSoftStory.png',
-    iconRetinaUrl: 'img/notSoftStory@2x.png',
-    iconSize: sizeForAllIcons,
-    // iconAnchor: [22, 94],
-    // popupAnchor: [-3, -76],
-    // shadowUrl: 'my-icon-shadow.png',
-    // shadowRetinaUrl: 'my-icon-shadow@2x.png',
-    // shadowSize: [68, 95],
-    // shadowAnchor: [22, 94]
-    });
+			//icon variables set to pngs
+			var sizeForAllIcons = [25, 30];
 
-    var softStoryIcon = L.icon({
-    iconUrl: 'img/softStory.png',
-    iconRetinaUrl: 'img/softStory@2x.png',
-    iconSize: sizeForAllIcons,
-    // iconAnchor: [22, 94],
-    // popupAnchor: [-3, -76],
-    // shadowUrl: 'my-icon-shadow.png',
-    // shadowRetinaUrl: 'my-icon-shadow@2x.png',
-    // shadowSize: [68, 95],
-    // shadowAnchor: [22, 94]
-    });
+			var notSoftStoryIcon = L.icon({
+			iconUrl: 'img/notSoftStory.png',
+			iconRetinaUrl: 'img/notSoftStory@2x.png',
+			iconSize: sizeForAllIcons,
+			// iconAnchor: [22, 94],
+			// popupAnchor: [-3, -76],
+			// shadowUrl: 'my-icon-shadow.png',
+			// shadowRetinaUrl: 'my-icon-shadow@2x.png',
+			// shadowSize: [68, 95],
+			// shadowAnchor: [22, 94]
+			});
 
-    var rehabIcon = L.icon({
-    iconUrl: 'img/rehab.png',
-    iconRetinaUrl: 'img/rehab.png',
-    iconSize: sizeForAllIcons,
-    // iconAnchor: [22, 94],
-    // popupAnchor: [-3, -76],
-    // shadowUrl: 'my-icon-shadow.png',
-    // shadowRetinaUrl: 'my-icon-shadow@2x.png',
-    // shadowSize: [68, 95],
-    // shadowAnchor: [22, 94]
-    });
+			var softStoryIcon = L.icon({
+			iconUrl: 'img/softStory.png',
+			iconRetinaUrl: 'img/softStory@2x.png',
+			iconSize: sizeForAllIcons,
+			// iconAnchor: [22, 94],
+			// popupAnchor: [-3, -76],
+			// shadowUrl: 'my-icon-shadow.png',
+			// shadowRetinaUrl: 'my-icon-shadow@2x.png',
+			// shadowSize: [68, 95],
+			// shadowAnchor: [22, 94]
+			});
 
-    // var BuildingIcon;
+			var rehabIcon = L.icon({
+			iconUrl: 'img/rehab.png',
+			iconRetinaUrl: 'img/rehab.png',
+			iconSize: sizeForAllIcons,
+			// iconAnchor: [22, 94],
+			// popupAnchor: [-3, -76],
+			// shadowUrl: 'my-icon-shadow.png',
+			// shadowRetinaUrl: 'my-icon-shadow@2x.png',
+			// shadowSize: [68, 95],
+			// shadowAnchor: [22, 94]
+			});
 
-    $.getJSON("./latlonglookup.json", function(latlonglookup) {
+			// var BuildingIcon;
 
-      $.getJSON("http://www.civicdata.com/api/action/datastore_search?resource_id=46ec0807-31ff-497f-bfa0-f31c796cdee8", function(buildingdata_page1) {
+			$.getJSON("./latlonglookup.json", function(latlonglookup) {
 
-        $.getJSON("http://www.civicdata.com/api/action/datastore_search?offset=100&resource_id=46ec0807-31ff-497f-bfa0-f31c796cdee8", function(buildingdata_page2) {
+				$.getJSON("http://www.civicdata.com/api/action/datastore_search?resource_id=46ec0807-31ff-497f-bfa0-f31c796cdee8", function(buildingdata_page1) {
 
-            all_buildings = [].concat(buildingdata_page1['result']['records']).concat(buildingdata_page2['result']['records']);
+					$.getJSON("http://www.civicdata.com/api/action/datastore_search?offset=100&resource_id=46ec0807-31ff-497f-bfa0-f31c796cdee8", function(buildingdata_page2) {
 
-            // Below code will show all unique building descriptions if uncommented
-            //building_descriptions = _.map(all_buildings, function(building) { return building['Description'] } );
-            //unique_building_descriptions = _.uniq(building_descriptions);
-            //_.each(unique_building_descriptions, function(d) { console.log(d); } );
+							all_buildings = [].concat(buildingdata_page1['result']['records']).concat(buildingdata_page2['result']['records']);
 
-            _.each(all_buildings, function(item){
-              key = item['PermitNumber'];
-              latlong = latlonglookup[key];
+							// Below code will show all unique building descriptions if uncommented
+							//building_descriptions = _.map(all_buildings, function(building) { return building['Description'] } );
+							//unique_building_descriptions = _.uniq(building_descriptions);
+							//_.each(unique_building_descriptions, function(d) { console.log(d); } );
 
-              //fetch icon depending on description
-              status = getStatus(item['Description']);
+							_.each(all_buildings, function(item){
+								key = item['PermitNumber'];
+								latlong = latlonglookup[key];
 
-              if(status === 'Soft Story'){
-                BuildingIcon = softStoryIcon;
-              }
-              else if(status === 'Potential Soft Story'){
-                BuildingIcon = rehabIcon;
-              }
-              else if(status === 'Retrofitted') {
-                BuildingIcon = notSoftStoryIcon;
-              }
-              else if(status === 'Not Soft Story') {
-                BuildingIcon = notSoftStoryIcon;
-              }
-              else {
-                console.log("Unable to parse building description: " + item['Description']);
-              }
+								//fetch icon depending on description
+								status = getStatus(item['Description']);
 
-              L.marker(latlong, {icon: BuildingIcon}).addTo(map).bindPopup(item['StreetAddress'] + '<br><br>' + status);
-            });
-          });
-      });
-    });
+								if(status === 'Soft Story'){
+									BuildingIcon = softStoryIcon;
+								}
+								else if(status === 'Potential Soft Story'){
+									BuildingIcon = rehabIcon;
+								}
+								else if(status === 'Retrofitted') {
+									BuildingIcon = notSoftStoryIcon;
+								}
+								else if(status === 'Not Soft Story') {
+									BuildingIcon = notSoftStoryIcon;
+								}
+								else {
+									console.log("Unable to parse building description: " + item['Description']);
+								}
 
-   //legend
-    var legend = L.control({position: 'bottomleft'});
+								L.marker(latlong, {icon: BuildingIcon}).addTo(map).bindPopup(item['StreetAddress'] + '<br><br>' + status);
+							});
+						});
+				});
+			});
 
-    legend.onAdd = function (map) {
-    var div = L.DomUtil.create('div', 'info legend');
+	//		map.legendControl.addLegend('Legend content');
 
-        div.innerHTML +=
-        '<h4> Data collected by XXX, between YYY and ZZZ <br/> "Soft Story" defined as AAA by Agency BBB</h4>'  + '<p>' + '<img src="img/softStory.png" width="20px">' + '   Soft Story Building <br/>'  + '<img src="img/rehab.png" width="20px">' + '  Potential Soft Story Building <br/>' +  '<img src="img/notSoftStory.png" width="20px">' + ' Retrofitted </br>' +  '<img src="img/notSoftStory.png" width="20px">' + '   Not Soft Story Building';
+		 //legend
+			var legend = L.control({position: 'bottomleft'});
 
-        return div;
-      };
+			legend.onAdd = function (map) {
+			var div = L.DomUtil.create('div', 'info legend');
 
-    legend.addTo(map);
+					div.innerHTML +=
+					'<h4> Data collected by XXX, between YYY and ZZZ <br/> "Soft Story" defined as AAA by Agency BBB</h4>'  + '<p>' + '<img src="img/softStory.png" width="20px">' + '   Soft Story Building <br/>'  + '<img src="img/rehab.png" width="20px">' + '  Potential Soft Story Building <br/>' +  '<img src="img/notSoftStory.png" width="20px">' + ' Retrofitted </br>' +  '<img src="img/notSoftStory.png" width="20px">' + '   Not Soft Story Building';
 
-  </script>
-</body>
+					return div;
+				};
+
+			legend.addTo(map);
+
+		</script>
+	</body>
 </html>
