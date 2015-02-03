@@ -12,8 +12,8 @@ module.exports = function(grunt) {
     // Project settings
     config: {
       // Configurable paths
-      app: '.',
-      bower: './bower_components'
+      app: './app'
+      //bower: './bower_components'
     },
 
     // TASK CONFIGURATION
@@ -21,8 +21,8 @@ module.exports = function(grunt) {
     //grunt-bower-concat -- Automatic concatenation of installed Bower components (JS and/or CSS) in the right order.
     bower_concat: {
       all: {
-        dest: 'scripts/_bower.js',
-        cssDest: 'styles/_bower.css',
+        dest: '<%= config.app %>/scripts/_bower.js',
+        cssDest: '<%= config.app %>/styles/_bower.css',
         /*exclude: [
           'jquery',
           'leaflet'
@@ -41,8 +41,8 @@ module.exports = function(grunt) {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: {
-        src: 'scripts/_bower.js',
-        dest: 'scripts/_bower.min.js'
+        src: '<%= config.app %>/scripts/_bower.js',
+        dest: '<%= config.app %>/scripts/_bower.min.js'
       }
     }
 
